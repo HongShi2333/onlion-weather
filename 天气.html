@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天气查询</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* 设置背景颜色 */
+            background-size: auto;
+            background-position: auto;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 90%;
+            width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.6); /* 设置内容区背景颜色及透明度 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 设置阴影效果 */
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: calc(100% - 16px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.7); /* 设置半透明背景颜色 */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .weather {
+            margin-top: 20px;
+            text-align: left;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>天气查询</h1>
+        <h5>本网站由 <a href="https://space.bilibili.com/522549816">不会玩电路的红石</a> 搭建</h5>
+        <h5>数据由 <a href="https://wttr.in">wttr.in</a> 提供</h5>
+        <h5>背景是B站VTB <a href="https://space.bilibili.com/477792">雪狐桑</a>、<a href="https://space.bilibili.com/745493">咩栗</a>、<a href="https://space.bilibili.com/617459493">呜米</a></h5>
+        <label for="cityInput">输入查询的城市名称:</label>
+        <input type="text" id="cityInput" placeholder="城市名称，例：北京">
+        <button onclick="fetchWeather()">获取天气</button>
+
+        <div class="weather" id="weatherData">
+            <!-- 这里将显示天气信息 -->
+        </div>
+    </div>
+
+    <script>
+        // 存储背景图片的URL
+        const backgroundImages = [
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background1.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background2.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background3.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background4.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background5.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background6.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background7.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background8.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background9.jpg',
+            'https://gh.llkk.cc/https://raw.githubusercontent.com/HongShi2333/HongShi2333.github.io/main/images/weather/background10.jpg'
+        ];
+
+        // 随机选择背景图片
+        function setRandomBackgroundImage() {
+            const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+            document.body.style.backgroundImage = `url('${backgroundImages[randomIndex]}')`;
+        }
+
+        // 页面加载时设置随机背景图片
+        window.onload = setRandomBackgroundImage;
+
+        function fetchWeather() {
+            const city = document.getElementById('cityInput').value.trim();
+            if (!city) {
+                alert('Please enter a city name.');
+                return;
+            }
+
+            const weatherURL = `https://wttr.in/${city}`;
+
+            // 使用 Fetch API 请求天气数据
+            fetch(weatherURL)
+                .then(response => response.text())
+                .then(weatherData => {
+                    // 将天气数据显示在页面上
+                    const weatherDiv = document.getElementById('weatherData');
+                    weatherDiv.innerHTML = weatherData; // 使用 innerHTML 显示 HTML 内容
+                })
+                .catch(error => console.error('Error fetching weather:', error));
+        }
+    </script>
+</body>
+</html>
